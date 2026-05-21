@@ -1,0 +1,20 @@
+# config.yaml
+
+# For unpolarized Dame_Dlum09
+OUT_DIR: 'MK_results_Dmel_Dsim_whole_transcriptome'
+
+sample_list: "fastafiles/Dmel_Dsim.txt"
+gene_list: "/home/comcmill/MK_analysis/melanogaster_popgen/align_Dsim2_DmelCK1_transcriptome/CK1.CDS.fulltranscriptome.txt"
+
+popgen_options:
+  mode: "--pol unpol --outgroup Dsim --ingroup Dmel --PopGen --split_codon_sites"
+
+
+# For unpolarized Dame_Dlum09
+#OUT_DIR: 'MK_results_Dmel_Dsim_Testis_SFPs_unpol_full_list'
+
+#sample_list: "fastafiles/Dmel_Dsim.txt"
+#gene_list: "TranscriptIDList/SFP_Testis_tissue_specific_list.txt"
+
+#popgen_options:
+#  mode: "--pol unpol --outgroup Dmel --ingroup Dsim"
