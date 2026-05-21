@@ -1,0 +1,3 @@
+Organism Scientific Name	Organism Common Name	Organism Qualifier	Taxonomy id	Assembly Name	Assembly Accession	Source	Annotation	Level	Contig N50	Size	Submission Date	Gene Count	BioProject	BioSample
+Drosophila simulans		sex: female, strain: w501	7240	Prin_Dsim_3.1	GCA_016746395.2	GenBank		Chromosome	22319025	131663590	2021-10-05		PRJNA377886	SAMN06473875
+Drosophila simulans		sex: female, strain: w501	7240	Prin_Dsim_3.1	GCF_016746395.2	RefSeq	NCBI Drosophila simulans Annotation Release 103	Chromosome	22319025	131663590	2021-10-05	15845	PRJNA377886	SAMN06473875
