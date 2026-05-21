@@ -1,0 +1,3 @@
+seq_id	start	end	seq_id2	start2	end2
+ref::NT_037436.4	3000	3330	qry::NC_052529.2	3000	3461
+ref::NT_037436.4	3126	3330	qry::NC_052529.2	3000	3461
