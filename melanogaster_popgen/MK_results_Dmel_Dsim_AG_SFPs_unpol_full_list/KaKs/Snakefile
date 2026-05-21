@@ -1,0 +1,52 @@
+import os
+import glob
+
+# 1. Load transcript IDs
+
+SFPS = [line.strip() for line in open("filtered_fasta.txt") if line.strip()]
+
+# 2. Load strain names 
+STRAIN = [line.strip() for line in open("strain.txt") if line.strip()]
+
+FASTA_MAP = {
+    os.path.basename(f).replace(".fasta", ""): f
+    for f in glob.glob("Dame_Dvir87/*.fasta")
+}
+
+# 3. Final outputs: results_Dame_D(outgroup)/<strain>/<transcript>.txt
+rule all:
+    input:
+        expand(
+            "results_Dame_Dvir/{strain}/{sfp}/KaKs.txt",
+            strain=STRAIN,
+            sfp=SFPS
+        )
+
+# 4. Ka/Ks rule with timeout 
+rule calcKaKs:
+    input:
+        fasta=lambda wc: FASTA_MAP[wc.strain]
+    output:
+        "results_Dame_Dvir/{strain}/{sfp}/KaKs.txt"
+    params:
+        outdir = lambda wc: f"results_Dame_Dvir/{wc.strain}/{wc.sfp}"
+    log:
+        "results_Dame_Dvir/{strain}/{sfp}.log"
+    conda:
+        "../SAPA.yml"
+    threads: 4
+    resources:
+        mem_mb=500
+    shell:
+        r"""
+        mkdir -p {params.outdir}
+
+        timeout 60 \
+            ../../../labshare/archive/popGenomics-clean/SAPA/SAPA \
+                -c {input.fasta} \
+                -i {wildcards.sfp} \
+                -o {output} \
+                --calculate_KaKs \
+            2> {log} \
+        || echo "TIMEOUT or ERROR for {wildcards.strain} {wildcards.sfp}" >> {log}
+        """
