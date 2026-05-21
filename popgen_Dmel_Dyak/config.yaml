@@ -1,0 +1,55 @@
+# config.yaml
+
+#OUT_DIR: 'MK_results_Dame_Dnov_unpol'
+
+#sample_list: "example/sampleList.txt"
+#gene_list: "example/subSample.txt"
+
+#popgen_options:
+  #mode: "--pol unpol --outgroup Dnov --ingroup Dame"
+
+
+
+# For unpolarized Dame_Dnov4
+#OUT_DIR: 'MK_results_Dame_Dnov4_unpol'
+
+#sample_list: "fastafiles/Dame_Dnov4.txt"
+#gene_list: "TranscriptIDList/TranscriptID_Dame_Dnov.txt"
+
+#popgen_options:
+#  mode: "--pol unpol --outgroup Dnov --ingroup Dame"
+
+
+
+# For unpolarized Dame_Dlum09
+#OUT_DIR: 'MK_results_Dame_Dlum09_unpol'
+
+#sample_list: "fastafiles/Dame_Dlum09.txt"
+#gene_list: "TranscriptIDList/TranscriptID_Dame_Dlum.txt"
+
+#popgen_options:
+#  mode: "--pol unpol --outgroup Dlum --ingroup Dame"
+
+
+
+# For unpolarized Dame_Dvir87
+#OUT_DIR: 'MK_results_Dame_Dvir87_unpol_full_list'
+
+#sample_list: "fastafiles/Dame_Dvir87_one_locality.txt"
+#gene_list: "TranscriptIDList/TranscriptID_list_occurances_in_Dvir87.txt"
+
+#popgen_options:
+#  mode: "--pol unpol --outgroup Dvir --ingroup Dame"
+
+
+
+
+# For unpolarized Dmel_Dyak
+OUT_DIR: 'MK_results_Dmel_Dyak_unpol'
+
+sample_list: "MK_results_Dame_Dlum09_unpol/CDS.fasta"
+gene_list: "gene_list"
+
+popgen_options:
+  mode: "--pol unpol --outgroup Dyak --ingroup Dmel"
+  

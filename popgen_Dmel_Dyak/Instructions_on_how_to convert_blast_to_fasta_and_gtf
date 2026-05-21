@@ -1,0 +1,59 @@
+# Obtain best hits from query: 
+awk '!/^#/ {print $1 "\t" $2}' data/FlyBase/dmel/mel_yak.blastp > data/FlyBase/dyak/dmel_dyak_orthologs.tsv
+awk -F'\t' '!seen[$1]++' data/FlyBase/dyak/dmel_dyak_orthologs.tsv > filtered_file.tsv
+# Obtain CDS fasta: 
+# Dmel: 
+gffread data/FlyBase/dmel/dmel-all-r6.67.gtf -g data/FlyBase/dmel/dmel-all-chromosome-r6.67.fasta -x data/FlyBase/dmel/dmel_cds_sequences.fa
+
+# Dyak: 
+gffread dyak.gtf -g dyak.fa -x dyak_cds.fa
+
+# Extract SFPs from CDS file: 
+faSomeRecords data/FlyBase/dmel/dmel_cds_sequences.fa \
+<(cut -f1 data/FlyBase/dyak/dmel_dyak_orthologs_best_hits.tsv) \
+data/FlyBase/dmel/dmel_SFPs_dyakOrthologs_CDS.fa
+
+faSomeRecords data/FlyBase/dyak/dyak_cds_fixed.fasta \
+<(cut -f2 data/FlyBase/dyak/dmel_dyak_orthologs_best_hits.tsv) \
+data/FlyBase/dyak/dyak_SFPs_dmelOrthologs_CDS.fa
+
+# MK Test requires Transcript IDs or gene symbols to be the same. rename all yakuba Transcript IDs to the melanogaster ortholog. 
+awk '
+BEGIN {FS=OFS="\t"}
+
+# Read BLAST file first: map Yakuba (col1) → Mel (col2)
+NR==FNR {
+    map[$1] = $2
+    next
+}
+
+# Process FASTA
+/^>/ {
+    header = substr($0, 2)
+    split(header, a, " ")
+    id = a[1]
+
+    if (id in map) {
+        sub(id, map[id], $0)   # replace only the ID
+    }
+}
+
+{print}
+' data/FlyBase/dmel/reciprocal_top_hits_blastp.tsv data/FlyBase/dyak/reciprocal_top_hits_yak.fa > data/FlyBase/dyak/renamed_reciprocal_top_hits_yak.fa.fasta
+
+# Selecting top hits from dmel dyak blast results: 
+awk 'BEGIN {FS=OFS="\t"}
+{
+    query = $1
+    evalue = $11
+
+    if (!(query in best) || evalue < best_e[query]) {
+        best[query] = $0
+        best_e[query] = evalue
+    }
+}
+END {
+    for (q in best) {
+        print best[q]
+    }
+}' data/FlyBase/dmel/mel_yak.blastp > data/FlyBase/dmel/top_hits_dmel_dyak.tsv

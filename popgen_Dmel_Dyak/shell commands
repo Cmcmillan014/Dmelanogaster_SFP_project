@@ -1,0 +1,100 @@
+# Generate proteins.fa files for each species
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ gffread data/NCBI/Dana_data/GCF_017639315.1/genomic.gff -g data/NCBI/Dana_data/GCF_017639315.1/GCF_017639315.1_ASM1763931v2_genomic.fna -y data/NCBI/Dana_data/GCF_017639315.1/proteins.fa
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ gffread data/NCBI/Dere_data/GCF_003286155.1/genomic.gff -g data/NCBI/Dere_data/GCF_003286155.1/GCF_003286155.1_DereRS2_genomic.fna -y data/NCBI/Dere_data/GCF_003286155.1/proteins.fa
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ gffread data/NCBI/Dmel_data/GCF_000001215.4/genomic_fixed.gff -g data/NCBI/Dmel_data/GCF_000001215.4/GCF_000001215.4_Release_6_plus_ISO1_MT_genomic.fna -y data/NCBI/Dmel_data/GCF_000001215.4/proteins.fa
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ gffread data/NCBI/Dper_data/GCF_003286085.1/genomic.gff -g data/NCBI/Dper_data/GCF_003286085.1/GCF_003286085.1_DperRS2_genomic.fna -y data/NCBI/Dper_data/GCF_003286085.1/proteins.fa
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ gffread data/NCBI/Dpseudo_data/GCF_009870125.1/genomic.gff -g data/NCBI/Dpseudo_data/GCF_009870125.1/GCF_009870125.1_UCI_Dpse_MV25_genomic.fna -y data/NCBI/Dpseudo_data/GCF_009870125.1/proteins.fa
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ gffread data/NCBI/Dsec_data/GCF_004382195.2/genomic.gff -g data/NCBI/Dsec_data/GCF_004382195.2/GCF_004382195.2_ASM438219v2_genomic.fna -y data/NCBI/Dsec_data/GCF_004382195.2/proteins.fa
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ gffread data/NCBI/Dsim_data/GCF_016746395.2/genomic.gff -g data/NCBI/Dsim_data/GCF_016746395.2/GCF_016746395.2_Prin_Dsim_3.1_genomic.fna -y data/NCBI/Dsim_data/GCF_016746395.2/proteins.fa
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ gffread data/NCBI/Dyak_data/GCF_016746365.2/genomic.gff -g data/NCBI/Dyak_data/GCF_016746365.2/GCF_016746365.2_Prin_Dyak_Tai18E2_2.1_genomic.fna -y data/NCBI/Dyak_data/GCF_016746365.2/proteins.fa
+
+# Make blast databases for each species
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ makeblastdb -in data/NCBI/Dana_data/GCF_017639315.1/proteins.fa -dbtype prot -out dana_db
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ makeblastdb -in data/NCBI/Dere_data/GCF_003286155.1/proteins.fa -dbtype prot -out dere_db
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ makeblastdb -in data/NCBI/Dmel_data/GCF_000001215.4/proteins.fa -dbtype prot -out dmel_db
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ makeblastdb -in data/NCBI/Dper_data/GCF_003286085.1/proteins.fa -dbtype prot -out dper_db
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ makeblastdb -in data/NCBI/Dpseudo_data/GCF_009870125.1/proteins.fa -dbtype prot -out dpseudo_db
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ makeblastdb -in data/NCBI/Dsec_data/GCF_004382195.2/proteins.fa -dbtype prot -out dsec_db
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ makeblastdb -in data/NCBI/Dsim_data/GCF_016746395.2/proteins.fa -dbtype prot -out dsim_db
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ makeblastdb -in data/NCBI/Dyak_data/GCF_016746365.2/proteins.fa -dbtype prot -out dyak_db
+
+# Forwards Blast D. melanogaster against target species
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query dmel.fa -db dyak_db -out mel_vs_yak.out -outfmt 6 -max_target_seqs 5 #template shell command for blastp, will be repeated for each target species with appropriate changes to query, database, and output file names
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Dmel_data/GCF_000001215.4/protein_SFP.fa -db data/NCBI/Dana_data/GCF_017639315.1/dana_db -out data/NCBI/Blast_output/Dana/mel_vs_ana_forward_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Dmel_data/GCF_000001215.4/protein_SFP.fa -db data/NCBI/Dere_data/GCF_003286155.1/dere_db -out data/NCBI/Blast_output/Dere/mel_vs_ere_forward_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Dmel_data/GCF_000001215.4/protein_SFP.fa -db data/NCBI/Dper_data/GCF_003286085.1/dper_db -out data/NCBI/Blast_output/Dper/mel_vs_per_forward_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Dmel_data/GCF_000001215.4/protein_SFP.fa -db data/NCBI/Dpseudo_data/GCF_009870125.1/dpseudo_db -out data/NCBI/Blast_output/Dpseudo/mel_vs_pseudo_forward_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Dmel_data/GCF_000001215.4/protein_SFP.fa -db data/NCBI/Dsec_data/GCF_004382195.2/dsec_db -out data/NCBI/Blast_output/Dsec/mel_vs_sec_forward_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Dmel_data/GCF_000001215.4/protein_SFP.fa -db data/NCBI/Dsim_data/GCF_016746395.2/dsim_db -out data/NCBI/Blast_output/Dsim/mel_vs_sim_forward_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Dmel_data/GCF_000001215.4/protein_SFP.fa -db data/NCBI/Dyak_data/GCF_016746365.2/dyak_db -out data/NCBI/Blast_output/Dyak/mel_vs_yak_forward_blast.out -outfmt 6 -max_target_seqs 5
+
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ cut -f 2 data/NCBI/Blast_output/Dana/mel_vs_ana_forward_blast.out > data/NCBI/Blast_output/Dana/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ sort -u -o data/NCBI/Blast_output/Dana/query_gene_list.txt data/NCBI/Blast_output/Dana/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ cut -f 2 data/NCBI/Blast_output/Dere/mel_vs_ere_forward_blast.out > data/NCBI/Blast_output/Dere/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ sort -u -o data/NCBI/Blast_output/Dere/query_gene_list.txt data/NCBI/Blast_output/Dere/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ cut -f 2 data/NCBI/Blast_output/Dper/mel_vs_per_forward_blast.out > data/NCBI/Blast_output/Dper/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ sort -u -o data/NCBI/Blast_output/Dper/query_gene_list.txt data/NCBI/Blast_output/Dper/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ cut -f 2 data/NCBI/Blast_output/Dper/mel_vs_per_forward_blast.out > data/NCBI/Blast_output/Dper/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ sort -u -o data/NCBI/Blast_output/Dper/query_gene_list.txt data/NCBI/Blast_output/Dper/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ cut -f 2 data/NCBI/Blast_output/Dpseudo/mel_vs_pseudo_forward_blast.out > data/NCBI/Blast_output/Dpseudo/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ sort -u -o data/NCBI/Blast_output/Dpseudo/query_gene_list.txt data/NCBI/Blast_output/Dpseudo/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ cut -f 2 data/NCBI/Blast_output/Dsec/mel_vs_sec_forward_blast.out > data/NCBI/Blast_output/Dsec/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ sort -u -o data/NCBI/Blast_output/Dsec/query_gene_list.txt data/NCBI/Blast_output/Dsec/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ cut -f 2 data/NCBI/Blast_output/Dsim/mel_vs_sim_forward_blast.out > data/NCBI/Blast_output/Dsim/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ sort -u -o data/NCBI/Blast_output/Dsim/query_gene_list.txt data/NCBI/Blast_output/Dsim/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ cut -f 2 data/NCBI/Blast_output/Dyak/mel_vs_yak_forward_blast.out > data/NCBI/Blast_output/Dyak/query_gene_list.txt 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ sort -u -o data/NCBI/Blast_output/Dyak/query_gene_list.txt data/NCBI/Blast_output/Dyak/query_gene_list.txt 
+
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ faSomeRecords data/NCBI/Dana_data/GCF_017639315.1/protein.faa data/NCBI/Blast_output/Dana/query_gene_list.txt data/NCBI/Blast_output/query_ana_reciprocal.fasta
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ faSomeRecords data/NCBI/Dere_data/GCF_003286155.1/protein.faa data/NCBI/Blast_output/Dere/query_gene_list.txt data/NCBI/Blast_output/query_ere_reciprocal.fasta
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ faSomeRecords data/NCBI/Dper_data/GCF_003286085.1/protein.faa data/NCBI/Blast_output/Dper/query_gene_list.txt data/NCBI/Blast_output/query_per_reciprocal.fasta
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ faSomeRecords data/NCBI/Dpseudo_data/GCF_009870125.1/protein.faa data/NCBI/Blast_output/Dpseudo/query_gene_list.txt data/NCBI/Blast_output/query_pseudo_reciprocal.fasta
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ faSomeRecords data/NCBI/Dsec_data/GCF_004382195.2/protein.faa data/NCBI/Blast_output/Dsec/query_gene_list.txt data/NCBI/Blast_output/query_sec_reciprocal.fasta
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ faSomeRecords data/NCBI/Dsim_data/GCF_016746395.2/protein.faa data/NCBI/Blast_output/Dsim/query_gene_list.txt data/NCBI/Blast_output/query_sim_reciprocal.fasta
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ faSomeRecords data/NCBI/Dyak_data/GCF_016746365.2/protein.faa data/NCBI/Blast_output/Dyak/query_gene_list.txt data/NCBI/Blast_output/query_yak_reciprocal.fasta
+
+# Reverse Blast D. melanogaster against target species 
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query d<target_species>.fa -db dmel -out reciprocal_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Blast_output/Dana/query_ana_reciprocal.fasta -db data/NCBI/Dmel_data/GCF_000001215.4/dmel_db -out data/NCBI/Blast_output/Dana/ana_vs_mel_reverse_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Blast_output/Dere/query_ere_reciprocal.fasta -db data/NCBI/Dmel_data/GCF_000001215.4/dmel_db -out data/NCBI/Blast_output/Dere/ere_vs_mel_reverse_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Blast_output/Dper/query_per_reciprocal.fasta -db data/NCBI/Dmel_data/GCF_000001215.4/dmel_db -out data/NCBI/Blast_output/Dper/per_vs_mel_reverse_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Blast_output/Dpseudo/query_pseudo_reciprocal.fasta -db data/NCBI/Dmel_data/GCF_000001215.4/dmel_db -out data/NCBI/Blast_output/Dpseudo/pseudo_vs_mel_reverse_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Blast_output/Dsec/query_sec_reciprocal.fasta -db data/NCBI/Dmel_data/GCF_000001215.4/dmel_db -out data/NCBI/Blast_output/Dsec/sec_vs_mel_reverse_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Blast_output/Dsim/query_sim_reciprocal.fasta -db data/NCBI/Dmel_data/GCF_000001215.4/dmel_db -out data/NCBI/Blast_output/Dsim/sim_vs_mel_reverse_blast.out -outfmt 6 -max_target_seqs 5
+(Blast) rc-yahmed-node3 popgen_Dmel_Dyak $ blastp -query data/NCBI/Blast_output/Dyak/query_yak_reciprocal.fasta -db data/NCBI/Dmel_data/GCF_000001215.4/dmel_db -out data/NCBI/Blast_output/Dyak/yak_vs_mel_reverse_blast.out -outfmt 6 -max_target_seqs 5 
+
+# Identify reciprocal best hits by comparing forward and reverse blast outputs, and generate final list of candidate orthologs for each species
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
