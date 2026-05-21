@@ -1,0 +1,3 @@
+Organism Scientific Name	Organism Common Name	Organism Qualifier	Taxonomy id	Assembly Name	Assembly Accession	Source	Annotation	Level	Contig N50	Size	Submission Date	Gene Count	BioProject	BioSample
+Drosophila pseudoobscura		sex: female, strain: MV-25-SWS-2005	7237	UCI_Dpse_MV25	GCA_009870125.2	GenBank		Chromosome	30706867	163266851	2020-03-03		PRJNA596268	SAMN13616452
+Drosophila pseudoobscura		sex: female, strain: MV-25-SWS-2005	7237	UCI_Dpse_MV25	GCF_009870125.1	RefSeq	GCF_009870125.1-RS_2025_01	Chromosome	30706867	163266851	2020-03-03	16880	PRJNA596268	SAMN13616452

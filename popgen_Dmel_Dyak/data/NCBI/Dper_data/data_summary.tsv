@@ -1,0 +1,3 @@
+Organism Scientific Name	Organism Common Name	Organism Qualifier	Taxonomy id	Assembly Name	Assembly Accession	Source	Annotation	Level	Contig N50	Size	Submission Date	Gene Count	BioProject	BioSample
+Drosophila persimilis		strain: 14011-0111.01,24,50	7234	DperRS2	GCA_003286085.2	GenBank		Contig	5212974	195512972	2018-10-23		PRJNA475270	SAMN09383163
+Drosophila persimilis		strain: 14011-0111.01,24,50	7234	DperRS2	GCF_003286085.1	RefSeq	NCBI Drosophila persimilis Annotation Release 101	Contig	5212974	195512972	2018-10-23	15854	PRJNA475270	SAMN09383163

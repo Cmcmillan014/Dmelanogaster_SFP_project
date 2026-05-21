@@ -1,0 +1,3 @@
+Organism Scientific Name	Organism Common Name	Organism Qualifier	Taxonomy id	Assembly Name	Assembly Accession	Source	Annotation	Level	Contig N50	Size	Submission Date	Gene Count	BioProject	BioSample
+Drosophila erecta		sex: pooled male and female, strain: 14021-0224.00,06,07	7220	DereRS2	GCA_003286155.2	GenBank		Contig	22146549	146538397	2018-10-23		PRJNA475270	SAMN09383010
+Drosophila erecta		sex: pooled male and female, strain: 14021-0224.00,06,07	7220	DereRS2	GCF_003286155.1	RefSeq	NCBI Drosophila erecta Annotation Release 101	Contig	22146549	146538397	2018-10-23	14681	PRJNA475270	SAMN09383010
