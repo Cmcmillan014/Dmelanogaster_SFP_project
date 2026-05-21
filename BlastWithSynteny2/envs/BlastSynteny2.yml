@@ -1,0 +1,34 @@
+name: BlastSynteny2
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - nodefaults
+
+dependencies:
+  # Core runtime
+  - python=3.10
+  - pip
+
+  # Sequence and annotation utilities
+  - blast
+  - gffread
+  - biopython
+  - entrez-direct
+  - wget
+
+  # Data handling and plotting in Python
+  - numpy
+  - pandas
+
+  # R environment and visualization
+  - r-base
+  - r-ggplot2
+  - r-dplyr
+  - r-tidyr
+  - r-gggenomes
+
+  # Optional: ensures proper rendering for R plots
+  - cairo
+  - pango
+  - fontconfig
