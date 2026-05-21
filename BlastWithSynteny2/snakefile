@@ -1,0 +1,74 @@
+GENE_LIST = "data/NCBI/Dyak_data/GCF_016746365.2/gene_list"
+#melanogaster
+REF_GENOME = "data/NCBI/Dmel_data/GCF_000001215.4/GCF_000001215.4_Release_6_plus_ISO1_MT_genomic.fna"
+REF_GTF    = "data/NCBI/Dmel_data/GCF_000001215.4/genomic.gtf"
+
+#ananassae
+#QUERY_GENOME = "data/NCBI/Dana_data/GCF_017639315.1/GCF_017639315.1_ASM1763931v2_genomic.fna"
+#QUERY_GTF    = "data/NCBI/Dana_data/GCF_017639315.1/genomic_fixed.gtf"
+
+#erecta
+#QUERY_GENOME = "data/NCBI/Dere_data/GCF_003286155.1/GCF_003286155.1_DereRS2_genomic.fna"
+#QUERY_GTF    = "data/NCBI/Dere_data/GCF_003286155.1/genomic_fixed.gtf"
+
+#persimilis
+#QUERY_GENOME = "data/NCBI/Dper_data/GCF_003286085.1/GCF_003286085.1_DperRS2_genomic.fna"
+#QUERY_GTF    = "data/NCBI/Dper_data/GCF_003286085.1/genomic_fixed.gtf"
+
+#pseudoobscura
+#QUERY_GENOME = "data/NCBI/Dpseudo_data/GCF_009870125.1/GCF_009870125.1_UCI_Dpse_MV25_genomic.fna"
+#QUERY_GTF    = "data/NCBI/Dpseudo_data/GCF_009870125.1/genomic_fixed.gtf"
+
+#sec
+#QUERY_GENOME = "data/NCBI/Dsec_data/GCF_004382195.2/GCF_004382195.2_ASM438219v2_genomic.fna"
+#QUERY_GTF    = "data/NCBI/Dsec_data/GCF_004382195.2/genomic_fixed.gtf"
+
+#simulans
+#QUERY_GENOME = "data/NCBI/Dsim_data/GCF_016746395.2/GCF_016746395.2_Prin_Dsim_3.1_genomic.fna"
+#QUERY_GTF    = "data/NCBI/Dsim_data/GCF_016746395.2/genomic_fixed.gtf"
+
+#yakuba
+QUERY_GENOME = "data/NCBI/Dyak_data/GCF_016746365.2/GCF_016746365.2_Prin_Dyak_Tai18E2_2.1_genomic.fna"
+QUERY_GTF    = "data/NCBI/Dyak_data/GCF_016746365.2/genomic_fixed.gtf"
+
+
+SCRIPT = "BlastSynteny2"
+
+OUTDIR = "results_export_geneious_yakuba_blast_results"
+
+with open(GENE_LIST) as f:
+    GENES = [line.strip() for line in f if line.strip()]
+
+rule all:
+    input:
+        expand(f"{OUTDIR}/{{gene}}/synteny_plot.pdf", gene=GENES)
+
+rule run_blast_synteny:
+    output:
+        pdf = f"{OUTDIR}/{{gene}}/synteny_plot.pdf"
+    params:
+        gene = "{gene}",
+        outdir = f"{OUTDIR}/{{gene}}"
+    conda:
+        "envs/BlastSynteny2.yml"
+    threads: 4
+    log:
+        f"{OUTDIR}/{{gene}}/run.log"
+    shell:
+        """
+        mkdir -p {params.outdir}
+
+        python3 {SCRIPT} \
+            -r {REF_GENOME} \
+            -g {REF_GTF} \
+            -i {params.gene} \
+            -y gene \
+            -q {QUERY_GENOME} \
+            -t {QUERY_GTF} \
+            -o {params.outdir} \
+            -m gene \
+            -w 3 \
+            --export_gff3_regions
+        """
+        # how to pipe std output to a file. 
+        #put an example of my input in scratch on labshare. 
