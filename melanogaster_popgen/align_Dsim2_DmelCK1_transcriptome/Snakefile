@@ -1,0 +1,24 @@
+TRANSCRIPTS = [t.strip() for t in open("CK1.CDS.fulltranscriptome.txt")]
+
+rule all:
+    input:
+        expand("results/alignments/{t}", t=TRANSCRIPTS)
+
+rule align_transcript:
+    input:
+        fasta="Dsim2_DmelCK1.CDS.fixed.fa"
+    output:
+        outdir=directory("results/alignments/{t}")
+    threads: 1
+    conda:
+        "/home/comcmill/MK_analysis/melanogaster_popgen/envs/SAPA.yml"
+    log:
+    "logs/{t}.log"
+    shell:
+        """
+        /home/labshare/scripts/popGenomics/SAPA/SAPA \
+            -c {input.fasta} \
+            -i {wildcards.t} \
+            -o {output.outdir} \
+            --save_alignments
+        """
