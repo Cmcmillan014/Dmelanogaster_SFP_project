@@ -14,14 +14,6 @@ miniforge3/
 .condor_jobs/
 .cookiecutter_replay/
 .cookiecutters/
-cbin/popgentestrun/.snakemake/*
-cbin/popgentestrun/testrun/*
-calculating_KaKs/Dame_Dnov4/*
-calculating_KaKs/Dame_Dvir87_all/*
-calculating_KaKs/KaKs.tmp/*
-calculating_KaKs/SFPs_only_KaKs/*
-calculating_KaKs/calculating_KaKs_2nd_attempt/KaKs.tmp/*
-
 
 # Compiled source #
 ###################
@@ -87,7 +79,6 @@ dist/
 .python-version
 /version.txt
 
-
 .idea
 
 .pytest*
@@ -117,16 +108,11 @@ FBtr*
 *.gff
 *.gtf
 *.fna
-
 *.fastq
 *.fastq.gz
 *.fq.gz
 *.bam
 *.sam
-*.fasta
-*.fa
-*.fna
-*.gff
 *.gbk
 *.tar.gz
 *.zip
@@ -139,3 +125,15 @@ results/
 output/
 tmp/
 *.fa*
+*.gff3
+*.pdf
+*.jsonl
+*.blastp
+*.pdb
+*.phr
+*.pin
+*.pjs
+*.pot
+*.psq
+*.ptf
+*.pto
